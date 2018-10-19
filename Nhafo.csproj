@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1ADBC1A1-8828-4E05-8BE2-D9451411619B}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Nhafo</RootNamespace>
+    <AssemblyName>Nhafo</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ControlzEx, Version=3.0.2.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net45\ControlzEx.dll</HintPath>
+    </Reference>
+    <Reference Include="MahApps.Metro, Version=1.6.5.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.1.6.5\lib\net45\MahApps.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net45\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="Xceed.Wpf.AvalonDock, Version=3.4.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.4.0\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=3.4.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.4.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=3.4.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.4.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=3.4.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.4.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.DataGrid, Version=3.4.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.4.0\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=3.4.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.4.0\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Code\Converters\DarkenBackgroundConverter.cs" />
+    <Compile Include="Code\Factories\ArestaFactory.cs" />
+    <Compile Include="Code\Factories\GrafoFactory.cs" />
+    <Compile Include="Code\GrafoOperations\BipartirGrafo.cs" />
+    <Compile Include="Code\GrafoOperations\ComponenteConexa.cs" />
+    <Compile Include="Code\GrafoOperations\GrafoColoringOperation.cs" />
+    <Compile Include="Code\GrafoOperations\InvertGrafo.cs" />
+    <Compile Include="Code\Models\IGrafo.cs" />
+    <Compile Include="Code\Services\Undo\IUndoableAction.cs" />
+    <Compile Include="Code\Services\Undo\IUndoTarget.cs" />
+    <Compile Include="Code\Services\Undo\UndoAresta.cs" />
+    <Compile Include="Code\Services\Undo\UndoVertice.cs" />
+    <Compile Include="Code\Services\Undo\UndoService.cs" />
+    <Compile Include="Code\Utils\ColorUtils.cs" />
+    <Compile Include="Code\Utils\Debug.cs" />
+    <Compile Include="Code\Utils\PointUtils.cs" />
+    <Compile Include="Code\Factories\VerticeFactory.cs" />
+    <Compile Include="Code\Utils\TextBlockUtils.cs" />
+    <Compile Include="WPF\Controls\ArestaControl.xaml.cs">
+      <DependentUpon>ArestaControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WPF\Controls\CartesianPlane.cs" />
+    <Compile Include="WPF\Controls\DraggableUserControl.cs" />
+    <Compile Include="WPF\Controls\GrafoControl.xaml.cs">
+      <DependentUpon>GrafoControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WPF\Controls\ResizeThumb.cs" />
+    <Compile Include="WPF\Controls\TextBoxPlaceholder.xaml.cs">
+      <DependentUpon>TextBoxPlaceholder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WPF\Controls\VerticeControl.xaml.cs">
+      <DependentUpon>VerticeControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WPF\Dialogs\ArestaPesoDialog.cs" />
+    <Compile Include="WPF\Dialogs\PesoDialog.xaml.cs">
+      <DependentUpon>PesoDialog.xaml</DependentUpon>
+    </Compile>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Code\Models\IAresta.cs" />
+    <Compile Include="Code\Models\ArestaDirection.cs" />
+    <Compile Include="Code\Models\IVertice.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Resources\Icons.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\IconsNonShared.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WPF\Controls\ArestaControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WPF\Controls\GrafoControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WPF\Controls\TextBoxPlaceholder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WPF\Controls\VerticeControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WPF\Dialogs\PesoDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Resource Include="Resources\Entypo.ttf" />
+    <Resource Include="Resources\Fonts\Roboto-Black.ttf" />
+    <Resource Include="Resources\Fonts\Roboto-BlackItalic.ttf" />
+    <Resource Include="Resources\Fonts\Roboto-Bold.ttf" />
+    <Resource Include="Resources\Fonts\Roboto-BoldItalic.ttf" />
+    <Resource Include="Resources\Fonts\Roboto-Italic.ttf" />
+    <Resource Include="Resources\Fonts\Roboto-Light.ttf" />
+    <Resource Include="Resources\Fonts\Roboto-LightItalic.ttf" />
+    <Resource Include="Resources\Fonts\Roboto-Medium.ttf" />
+    <Resource Include="Resources\Fonts\Roboto-MediumItalic.ttf" />
+    <Resource Include="Resources\Fonts\Roboto-Regular.ttf" />
+    <Resource Include="Resources\Fonts\Roboto-Thin.ttf" />
+    <Resource Include="Resources\Fonts\Roboto-ThinItalic.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\ponta.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Menu\menu16px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Menu\addvertice16px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Menu\addaresta16px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Menu\bag16px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\WindowsIcons-license.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Entypo-license.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
