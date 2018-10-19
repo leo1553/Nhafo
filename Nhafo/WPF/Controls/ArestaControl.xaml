@@ -1,0 +1,49 @@
+﻿<local:DraggableUserControl x:Class="Nhafo.WPF.Controls.ArestaControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Nhafo.WPF.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300"
+             x:Name="uc">
+    <Canvas x:Name="canvas">
+        <Path Stroke="Transparent" StrokeThickness="7" x:Name="backgroundPath">
+            <Path.Data>
+                <PathGeometry>
+                    <PathGeometry.Figures>
+                        <PathFigureCollection>
+                            <PathFigure StartPoint="{Binding ElementName=uc, Path=PointA}">
+                                <PathFigure.Segments>
+                                    <PathSegmentCollection>
+                                        <QuadraticBezierSegment Point1="{Binding ElementName=uc, Path=MiddlePoint}" Point2="{Binding ElementName=uc, Path=PointB}" />
+                                    </PathSegmentCollection>
+                                </PathFigure.Segments>
+                            </PathFigure>
+                        </PathFigureCollection>
+                    </PathGeometry.Figures>
+                </PathGeometry>
+            </Path.Data>
+        </Path>
+        <Path Stroke="{Binding ElementName=uc, Path=Stroke}" StrokeThickness="{Binding ElementName=uc, Path=StrokeThickness}" x:Name="path">
+            <Path.Data>
+                <PathGeometry>
+                    <PathGeometry.Figures>
+                        <PathFigureCollection>
+                            <PathFigure StartPoint="{Binding ElementName=uc, Path=PointA}">
+                                <PathFigure.Segments>
+                                    <PathSegmentCollection>
+                                        <QuadraticBezierSegment Point1="{Binding ElementName=uc, Path=MiddlePoint}" Point2="{Binding ElementName=uc, Path=PointB}" />
+                                    </PathSegmentCollection>
+                                </PathFigure.Segments>
+                            </PathFigure>
+                        </PathFigureCollection>
+                    </PathGeometry.Figures>
+                </PathGeometry>
+            </Path.Data>
+        </Path>
+        <Ellipse Fill="{Binding ElementName=uc, Path=Stroke}" Width="10" Height="10" Stroke="Transparent" StrokeThickness="3" x:Name="ellipse" />
+        <TextBlock Text="{Binding ElementName=uc, Path=Text}" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" x:Name="textBlock" Padding="5" />
+        <Image Width="44" Height="44" Source="pack://application:,,,/Resources/Images/ponta.png" Canvas.Left="{Binding ElementName=uc, Path=PointB.X}" Canvas.Top="{Binding ElementName=uc, Path=PointB.Y}" x:Name="image" Margin="-22,-22,0,0" Visibility="Hidden" />
+    </Canvas>
+</local:DraggableUserControl>
