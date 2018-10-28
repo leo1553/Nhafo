@@ -19,7 +19,7 @@ using System.Windows.Data;
 
 namespace Nhafo {
     /// <summary>
-    /// Interação lógica para MainWindow.xam
+    /// Interação lógica para MainWindow.xaml
     /// </summary>
     public partial class MainWindow : MetroWindow {
         public static readonly DependencyProperty IsToolbarMenuOpenProperty = DependencyProperty.Register("IsToolbarMenuOpen", typeof(bool), typeof(MainWindow));
@@ -30,8 +30,8 @@ namespace Nhafo {
         public IReadOnlyList<GrafoControl> GrafoControls {
             get {
                 List<GrafoControl> result = new List<GrafoControl>();
-                foreach(UIElement elem in cartesianPlane.Children)
-                    if(elem is GrafoControl control)
+                foreach (UIElement elem in cartesianPlane.Children)
+                    if (elem is GrafoControl control)
                         result.Add(control);
                 return result;
             }
@@ -66,8 +66,8 @@ namespace Nhafo {
 
             CreateAnimations();
 
-            foreach(UIElement elem in toolbar.Children) {
-                if(elem is Grid grid) {
+            foreach (UIElement elem in toolbar.Children) {
+                if (elem is Grid grid) {
                     grid.Margin = new Thickness(0, -250, 0, 0);
                     grid.Visibility = Visibility.Hidden;
                 }
@@ -86,11 +86,11 @@ namespace Nhafo {
         }
 
         private void MainWindowMouseDown(object sender, MouseButtonEventArgs e) {
-            if(e.ChangedButton == MouseButton.Left) {
+            if (e.ChangedButton == MouseButton.Left) {
                 HitTestResult htr = VisualTreeHelper.HitTest(this, e.GetPosition(this));
-                if(htr.VisualHit != null) {
+                if (htr.VisualHit != null) {
                     GrafoControl grafo = FindParent<GrafoControl>(htr.VisualHit);
-                    if(grafo != null)
+                    if (grafo != null)
                         grafosComboBox.SelectedItem = grafo;
                 }
             }
@@ -98,9 +98,9 @@ namespace Nhafo {
 
         private T FindParent<T>(DependencyObject dependencyObject) where T : DependencyObject {
             DependencyObject parent = dependencyObject.GetParentObject();
-            if(parent == null)
+            if (parent == null)
                 return null;
-            else if(parent is T)
+            else if (parent is T)
                 return parent as T;
             return FindParent<T>(parent);
         }
@@ -141,25 +141,25 @@ namespace Nhafo {
         }
 
         public void GrafoControlsChanged(GrafoControl control, bool addeded) {
-            if(control == InvalidGrafoControl)
+            if (control == InvalidGrafoControl)
                 return;
 
-            if(addeded) {
+            if (addeded) {
                 GrafoComboBoxItems.Add(new GrafoComboBoxItem(control));
             }
             else {
-                if(grafosComboBox.SelectedItem is GrafoComboBoxItem selectedItem)
-                    if(selectedItem.GrafoControl == control)
+                if (grafosComboBox.SelectedItem is GrafoComboBoxItem selectedItem)
+                    if (selectedItem.GrafoControl == control)
                         grafosComboBox.SelectedIndex = 0;
 
                 GrafoComboBoxItem toRemove = null;
-                foreach(GrafoComboBoxItem item in GrafoComboBoxItems) {
-                    if(item.GrafoControl == control) {
+                foreach (GrafoComboBoxItem item in GrafoComboBoxItems) {
+                    if (item.GrafoControl == control) {
                         toRemove = item;
                         break;
                     }
                 }
-                if(toRemove != null)
+                if (toRemove != null)
                     GrafoComboBoxItems.Remove(toRemove);
             }
         }
@@ -169,12 +169,12 @@ namespace Nhafo {
         private void _ToolbarCloseButtonClick(object sender, RoutedEventArgs e) => CloseToolbarMenu();
 
         private void OpenToolbarMenu(Grid toolbarMenu) {
-            if(openToolbarMenu == toolbarMenu) {
+            if (openToolbarMenu == toolbarMenu) {
                 CloseToolbarMenu();
                 return;
             }
 
-            if(openToolbarMenu != null)
+            if (openToolbarMenu != null)
                 openToolbarMenu.BeginStoryboard(toolbarHideStoryboard);
 
             openToolbarMenu = toolbarMenu;
@@ -183,7 +183,7 @@ namespace Nhafo {
         }
 
         private void CloseToolbarMenu() {
-            if(openToolbarMenu != null) {
+            if (openToolbarMenu != null) {
                 openToolbarMenu.BeginStoryboard(toolbarHideStoryboard);
                 openToolbarMenu = null;
             }
@@ -197,6 +197,7 @@ namespace Nhafo {
             grafoInvert.IsEnabled = enabled;
             grafoDelete.IsEnabled = enabled;
             grafoBipartir.IsEnabled = enabled;
+            grafoComponenteConexa.IsEnabled = enabled;
         }
 
         private void _Undo(object sender, ExecutedRoutedEventArgs e) => UndoService.Instance.Undo();
@@ -206,7 +207,7 @@ namespace Nhafo {
 
         private void AddGrafoButtonClick(object sender, RoutedEventArgs e) {
             GrafoControl control = GrafoFactory.CreateCenter(cartesianPlane, new Size(300, 200));
-            if(grafoNameTextBox.Text.Length != 0) {
+            if (grafoNameTextBox.Text.Length != 0) {
                 control.Key = grafoNameTextBox.Text;
                 grafoNameTextBox.Text = string.Empty;
                 control.BringToFront();
@@ -224,7 +225,7 @@ namespace Nhafo {
         private async void BipartirGrafoButtonClick(object sender, RoutedEventArgs e) {
             GrafoControl currentGrafo = (grafosComboBox.SelectedItem as GrafoComboBoxItem).GrafoControl;
             BipartirGrafo operation = new BipartirGrafo(currentGrafo);
-            if(operation.CanBeDone()) {
+            if (operation.CanBeDone()) {
                 GrafoControl result = operation.Color();
                 result.Location = currentGrafo.Location.Sum(new Point(currentGrafo.ActualWidth * .5, currentGrafo.ActualHeight * .5));
                 AddGrafo(result);
@@ -235,13 +236,21 @@ namespace Nhafo {
             }
         }
 
+        private void ComponenteConexaButtonClick(object sender, RoutedEventArgs e) {
+            GrafoControl currentGrafo = (grafosComboBox.SelectedItem as GrafoComboBoxItem).GrafoControl;
+            GrafoControl result = new ComponenteConexa(currentGrafo).Generate();
+            result.Location = currentGrafo.Location.Sum(new Point(currentGrafo.ActualWidth * .5, currentGrafo.ActualHeight * .5));
+            AddGrafo(result);
+            result.BringToFront();
+        }
+
         private async void GrafoDeleteButtonClick(object sender, RoutedEventArgs e) {
             GrafoControl currentGrafo = (grafosComboBox.SelectedItem as GrafoComboBoxItem).GrafoControl;
             MetroDialogSettings settings = new MetroDialogSettings() {
                 AffirmativeButtonText = "Sim",
                 NegativeButtonText = "Não"
             };
-            if(await this.ShowMessageAsync("Apagar", "Tem certeza que deseja apagar " + currentGrafo.Key + "?", MessageDialogStyle.AffirmativeAndNegative, settings) == MessageDialogResult.Affirmative) {
+            if (await this.ShowMessageAsync("Apagar", "Tem certeza que deseja apagar " + currentGrafo.Key + "?", MessageDialogStyle.AffirmativeAndNegative, settings) == MessageDialogResult.Affirmative) {
                 RemoveGrafo(currentGrafo);
             }
         }

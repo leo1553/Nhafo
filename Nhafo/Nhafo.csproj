@@ -88,6 +88,7 @@
     <Compile Include="Code\Factories\ArestaFactory.cs" />
     <Compile Include="Code\Factories\GrafoFactory.cs" />
     <Compile Include="Code\GrafoOperations\BipartirGrafo.cs" />
+    <Compile Include="Code\GrafoOperations\ComponenteConexa.cs" />
     <Compile Include="Code\GrafoOperations\GrafoColoringOperation.cs" />
     <Compile Include="Code\GrafoOperations\InvertGrafo.cs" />
     <Compile Include="Code\Models\IGrafo.cs" />
