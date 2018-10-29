@@ -198,6 +198,7 @@ namespace Nhafo {
             grafoDelete.IsEnabled = enabled;
             grafoBipartir.IsEnabled = enabled;
             grafoComponenteConexa.IsEnabled = enabled;
+            grafoPrim.IsEnabled = enabled;
         }
 
         private void _Undo(object sender, ExecutedRoutedEventArgs e) => UndoService.Instance.Undo();
@@ -239,6 +240,14 @@ namespace Nhafo {
         private void ComponenteConexaButtonClick(object sender, RoutedEventArgs e) {
             GrafoControl currentGrafo = (grafosComboBox.SelectedItem as GrafoComboBoxItem).GrafoControl;
             GrafoControl result = new ComponenteConexa(currentGrafo).Generate();
+            result.Location = currentGrafo.Location.Sum(new Point(currentGrafo.ActualWidth * .5, currentGrafo.ActualHeight * .5));
+            AddGrafo(result);
+            result.BringToFront();
+        }
+
+        private void PrimButtonClick(object sender, RoutedEventArgs e) {
+            GrafoControl currentGrafo = (grafosComboBox.SelectedItem as GrafoComboBoxItem).GrafoControl;
+            GrafoControl result = new PrimAlgorithm(currentGrafo).Generate();
             result.Location = currentGrafo.Location.Sum(new Point(currentGrafo.ActualWidth * .5, currentGrafo.ActualHeight * .5));
             AddGrafo(result);
             result.BringToFront();

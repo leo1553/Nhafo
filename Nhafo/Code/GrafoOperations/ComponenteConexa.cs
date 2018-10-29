@@ -32,7 +32,6 @@ namespace Nhafo.Code.GrafoOperations {
                 }
             }
             
-
             foreach (VerticeControl vertice in grafo.Vertices)
                 grafoControl.AddVertice(vertice.Clone());
 
