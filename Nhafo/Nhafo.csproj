@@ -119,8 +119,8 @@
       <DependentUpon>VerticeControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="WPF\Dialogs\ArestaPesoDialog.cs" />
-    <Compile Include="WPF\Dialogs\PesoDialog.xaml.cs">
-      <DependentUpon>PesoDialog.xaml</DependentUpon>
+    <Compile Include="WPF\Dialogs\SelectVerticeDialog.xaml.cs">
+      <DependentUpon>SelectVerticeDialog.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -161,7 +161,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="WPF\Dialogs\PesoDialog.xaml">
+    <Page Include="WPF\Dialogs\SelectVerticeDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

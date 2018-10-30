@@ -62,7 +62,8 @@ namespace Nhafo.Code.GrafoOperations {
             foreach(ArestaControl a in grafo.Arestas) {
                 grafoControl.AddAresta(new ArestaControl() {
                     VerticeA = vertices[FindIndex(a.VerticeA)],
-                    VerticeB = vertices[FindIndex(a.VerticeB)]
+                    VerticeB = vertices[FindIndex(a.VerticeB)],
+                    Weight = a.Weight
                 });
             }
 

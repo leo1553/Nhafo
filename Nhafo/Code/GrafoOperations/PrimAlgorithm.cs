@@ -20,25 +20,22 @@ namespace Nhafo.Code.GrafoOperations {
             this.grafo = grafo;
         }
 
-        public GrafoControl Generate() {
+        public GrafoControl Generate(VerticeControl startAt) {
             GrafoControl grafoControl = GrafoFactory.Create();
 
             if(grafo.Vertices.Count == 0)
                 return grafoControl;
 
-            int random = new Random().Next(grafo.Vertices.Count);
-            VerticeControl verticeInicial = grafo.Vertices[random];
-
             connected = new List<VerticeControl>();
             arestas = new List<ArestaControl>();
             
-            connected.Add(verticeInicial);
+            connected.Add(startAt);
             Work();
 
             foreach(VerticeControl vertice in grafo.Vertices) {
-                if(vertice == verticeInicial) {
+                if(vertice == startAt) {
                     VerticeControl v = vertice.Clone();
-                    v.Color = Colors.Green;
+                    v.Color = Colors.Gold;
                     grafoControl.AddVertice(v);
                 }
                 else {

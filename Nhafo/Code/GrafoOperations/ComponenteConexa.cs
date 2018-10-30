@@ -2,6 +2,7 @@
 using Nhafo.WPF.Controls;
 using System;
 using System.Collections.Generic;
+using System.Windows.Media;
 
 namespace Nhafo.Code.GrafoOperations {
     public class ComponenteConexa {
@@ -16,7 +17,7 @@ namespace Nhafo.Code.GrafoOperations {
             this.grafo = grafo;
         }
 
-        public GrafoControl Generate() {
+        public GrafoControl Generate(VerticeControl startAt) {
             GrafoControl grafoControl = GrafoFactory.Create();
 
             if (grafo.Vertices.Count == 0)
@@ -25,31 +26,43 @@ namespace Nhafo.Code.GrafoOperations {
             connected = new List<VerticeControl>();
             arestas = new List<ArestaControl>();
 
+            connected.Add(startAt);
+            Work(startAt);
+
             foreach(VerticeControl vertice in grafo.Vertices) {
                 if(!connected.Contains(vertice)) {
                     connected.Add(vertice);
                     Work(vertice);
                 }
             }
-            
-            foreach (VerticeControl vertice in grafo.Vertices)
-                grafoControl.AddVertice(vertice.Clone());
+
+            foreach(VerticeControl vertice in grafo.Vertices) {
+                if(vertice == startAt) {
+                    VerticeControl v = vertice.Clone();
+                    v.Color = Colors.Gold;
+                    grafoControl.AddVertice(v);
+                }
+                else {
+                    grafoControl.AddVertice(vertice.Clone());
+                }
+            }
 
             foreach (ArestaControl aresta in arestas)
                 grafoControl.AddAresta(
                     new ArestaControl() {
                         VerticeA = grafoControl.Vertices[IndexOf(aresta.VerticeA)],
-                        VerticeB = grafoControl.Vertices[IndexOf(aresta.VerticeB)]
+                        VerticeB = grafoControl.Vertices[IndexOf(aresta.VerticeB)],
+                        Weight = aresta.Weight
                     });
 
             GrafoFactory.CenterGrafoContent(grafoControl);
             return grafoControl;
         }
 
-        private void Work(VerticeControl vertice) {
+        private void Work(VerticeControl vertice) { 
             List<VerticeControl> newConnectedVertices = new List<VerticeControl>();
             VerticeControl v;
-            foreach (ArestaControl a in vertice.Arestas) {
+            foreach(ArestaControl a in vertice.Arestas) {
                 v = a.GetOposite(vertice);
                 if (!connected.Contains(v)) {
                     newConnectedVertices.Add(v);

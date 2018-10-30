@@ -237,20 +237,24 @@ namespace Nhafo {
             }
         }
 
-        private void ComponenteConexaButtonClick(object sender, RoutedEventArgs e) {
+        private async void ComponenteConexaButtonClick(object sender, RoutedEventArgs e) {
             GrafoControl currentGrafo = (grafosComboBox.SelectedItem as GrafoComboBoxItem).GrafoControl;
-            GrafoControl result = new ComponenteConexa(currentGrafo).Generate();
+            VerticeControl vertice = await SelectVerticeDialog.Show(currentGrafo, "Componente Conexa");
+            GrafoControl result = new ComponenteConexa(currentGrafo).Generate(vertice);
             result.Location = currentGrafo.Location.Sum(new Point(currentGrafo.ActualWidth * .5, currentGrafo.ActualHeight * .5));
             AddGrafo(result);
             result.BringToFront();
         }
 
-        private void PrimButtonClick(object sender, RoutedEventArgs e) {
+        private async void PrimButtonClick(object sender, RoutedEventArgs e) {
             GrafoControl currentGrafo = (grafosComboBox.SelectedItem as GrafoComboBoxItem).GrafoControl;
-            GrafoControl result = new PrimAlgorithm(currentGrafo).Generate();
-            result.Location = currentGrafo.Location.Sum(new Point(currentGrafo.ActualWidth * .5, currentGrafo.ActualHeight * .5));
-            AddGrafo(result);
-            result.BringToFront();
+            VerticeControl vertice = await SelectVerticeDialog.Show(currentGrafo, "Algoritmo de Prim");
+            if(vertice != null) {
+                GrafoControl result = new PrimAlgorithm(currentGrafo).Generate(vertice);
+                result.Location = currentGrafo.Location.Sum(new Point(currentGrafo.ActualWidth * .5, currentGrafo.ActualHeight * .5));
+                AddGrafo(result);
+                result.BringToFront();
+            }
         }
 
         private async void GrafoDeleteButtonClick(object sender, RoutedEventArgs e) {

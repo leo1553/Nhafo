@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:Nhafo"
              xmlns:Metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:converters="clr-namespace:Nhafo.Code.Converters"
+             xmlns:dialogs="clr-namespace:Nhafo.WPF.Dialogs"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
