@@ -1,4 +1,4 @@
-﻿<Dialog:CustomDialog x:Class="Nhafo.WPF.Dialogs.SelectVerticeDialog"
+﻿<Dialog:CustomDialog x:Class="Nhafo.WPF.Dialogs.AnimatedGrafoDialog"
                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -9,17 +9,15 @@
                      d:DesignWidth="600">
     <Grid Margin="0,20">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Selecione um vértice:" />
-        <ComboBox x:Name="comboBox" Height="30" Grid.Row="1"/>
+        <Grid x:Name="grid" HorizontalAlignment="Center" VerticalAlignment="Center" />
 
         <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Right" Margin="0,20,0,0">
-            <Button Content="OK" Margin="10,0,0,0" Padding="25,12" Style="{StaticResource AccentedButton}" Click="OKButtonClick" Name="okButton" />
-            <Button Content="Cancelar" Margin="10,0,0,0" Padding="25,12" Click="CancelButtonClick" />
+            <Button Content="Gerar Grafo" Margin="10,0,0,0" Padding="25,12" Style="{StaticResource AccentedButton}" Click="GrafoButtonClick" Name="grafoButton" />
+            <Button Content="Fechar" Margin="10,0,0,0" Padding="25,12" Click="CancelButtonClick" />
         </StackPanel>
     </Grid>
 </Dialog:CustomDialog>

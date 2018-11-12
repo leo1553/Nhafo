@@ -20,7 +20,7 @@ namespace Nhafo.Code.GrafoOperations {
             int i = 0, j;
             foreach(VerticeControl v in grafo.Vertices) {
                 vertices[i] = v.Clone();
-                vertices[i].Color = v.Color.Inverse();
+                //vertices[i].Color = v.Color.Inverse();
 
                 grafoControl.AddVertice(vertices[i]);
                 i++;

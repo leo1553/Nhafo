@@ -33,18 +33,18 @@ namespace Nhafo.WPF.Dialogs {
         }
 
         private async void OKButtonClick(object sender, RoutedEventArgs e) {
+            await mainWindow.HideMetroDialogAsync(this);
+
             if(tcs != null)
                 tcs.TrySetResult((comboBox.SelectedItem as VerticeComboBoxItem).VerticeControl);
-
-            await mainWindow.HideMetroDialogAsync(this);
             tcs = null;
         }
 
         private async void CancelButtonClick(object sender, RoutedEventArgs e) {
+            await mainWindow.HideMetroDialogAsync(this);
+
             if(tcs != null)
                 tcs.TrySetResult(null);
-
-            await mainWindow.HideMetroDialogAsync(this);
             tcs = null;
         }
 

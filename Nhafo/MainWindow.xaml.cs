@@ -250,10 +250,12 @@ namespace Nhafo {
             GrafoControl currentGrafo = (grafosComboBox.SelectedItem as GrafoComboBoxItem).GrafoControl;
             VerticeControl vertice = await SelectVerticeDialog.Show(currentGrafo, "Algoritmo de Prim");
             if(vertice != null) {
-                GrafoControl result = new PrimAlgorithm(currentGrafo).Generate(vertice);
-                result.Location = currentGrafo.Location.Sum(new Point(currentGrafo.ActualWidth * .5, currentGrafo.ActualHeight * .5));
-                AddGrafo(result);
-                result.BringToFront();
+                GrafoControl result = await new PrimAlgorithm(currentGrafo).Generate(vertice);
+                if(result != null) {
+                    result.Location = currentGrafo.Location.Sum(new Point(currentGrafo.ActualWidth * .5, currentGrafo.ActualHeight * .5));
+                    AddGrafo(result);
+                    result.BringToFront();
+                }
             }
         }
 

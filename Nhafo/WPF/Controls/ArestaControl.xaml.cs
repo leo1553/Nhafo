@@ -330,5 +330,9 @@ namespace Nhafo.WPF.Controls {
                 return VerticeA;
             return null;
         }
+
+        public override string ToString() {
+            return string.Format("{0} - {1}, W = {2}", VerticeA, VerticeB, Weight);
+        }
     }
 }

@@ -175,5 +175,9 @@ namespace Nhafo.WPF.Controls {
                 Draggable = Draggable
             };
         }
+
+        public override string ToString() {
+            return Key.ToString();
+        }
     }
 }

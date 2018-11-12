@@ -110,6 +110,31 @@ namespace Nhafo.Code.Factories {
             grafo.Height = maxY + VerticeFactory.VERTICE_DIAMETER;
         }
 
+        public static GrafoControl Clone(GrafoControl sourceGrafo) {
+            Dictionary<VerticeControl, VerticeControl> vertices = new Dictionary<VerticeControl, VerticeControl>();
+
+            GrafoControl grafo = Create();
+            VerticeControl vertice;
+            ArestaControl aresta;
+
+            foreach(VerticeControl v in sourceGrafo.Vertices) {
+                vertice = v.Clone();
+                vertices.Add(v, vertice);
+                grafo.AddVertice(vertice);
+            }
+            foreach(ArestaControl a in sourceGrafo.Arestas) {
+                aresta = new ArestaControl() {
+                    VerticeA = vertices[a.VerticeA],
+                    VerticeB = vertices[a.VerticeB],
+                    Weight = a.Weight
+                };
+                grafo.AddAresta(aresta);
+            }
+
+            CenterGrafoContent(grafo);
+            return grafo;
+        }
+
         public static string FindName(IReadOnlyList<GrafoControl> grafos) {
             List<string> usedNames = new List<string>(grafos.Select(x => x.Key));
 
