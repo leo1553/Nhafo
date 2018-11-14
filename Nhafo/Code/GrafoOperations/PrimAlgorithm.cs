@@ -55,7 +55,7 @@ namespace Nhafo.Code.GrafoOperations {
 
             GrafoFactory.CenterGrafoContent(grafoControl);
 
-            foreach(ArestaControl aresta in grafo.Arestas)
+            foreach(ArestaControl aresta in arestas)
                 grafoControl.AddAresta(
                     new ArestaControl() {
                         VerticeA = verticeDictionary[aresta.VerticeA],
@@ -73,6 +73,44 @@ namespace Nhafo.Code.GrafoOperations {
         }
 
         private void Work(GrafoControl grafo) {
+            double lighter = double.MaxValue;
+            ArestaControl lighterAresta = null;
+            VerticeControl vertice = null;
+            VerticeControl oposite;
+
+            foreach(VerticeControl v in connected) {
+                foreach(ArestaControl a in v.Arestas) {
+                    oposite = a.GetOposite(v);
+
+                    if(!connected.Contains(oposite)) {
+                        if(a.Weight < lighter) {
+                            lighter = a.Weight;
+                            lighterAresta = a;
+                            vertice = oposite;
+                        }
+                    }
+                }
+            }
+
+            if(lighterAresta == null)
+                return;
+
+            /*ArestaControl aresta;
+            for(int i = 0; i < grafo.Arestas.Count; i++) {
+                aresta = grafo.Arestas[i];
+                if(aresta.ContainsVertice(vertice) && aresta != lighterAresta) {
+                    grafo.RemoveAresta(aresta);
+                    i--;
+                }
+            }*/
+            
+            connected.Add(vertice);
+            arestas.Add(lighterAresta);
+
+            Work(grafo);
+        }
+
+        /*private void Work(GrafoControl grafo) {
             double lighter = double.MaxValue;
             ArestaControl lighterAresta = null;
             VerticeControl vertice = null;
@@ -107,7 +145,7 @@ namespace Nhafo.Code.GrafoOperations {
             arestas.Add(lighterAresta);
 
             Work(grafo);
-        }
+        }*/
 
         private int IndexOf(GrafoControl grafo, VerticeControl control) {
             for(int i = 0; i < grafo.Vertices.Count; i++)
