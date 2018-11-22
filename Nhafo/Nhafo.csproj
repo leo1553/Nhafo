@@ -89,8 +89,10 @@
     <Compile Include="Code\Factories\GrafoFactory.cs" />
     <Compile Include="Code\GrafoOperations\BipartirGrafo.cs" />
     <Compile Include="Code\GrafoOperations\ComponenteConexa.cs" />
+    <Compile Include="Code\GrafoOperations\DijkstraAlgorithm.cs" />
     <Compile Include="Code\GrafoOperations\GrafoColoringOperation.cs" />
     <Compile Include="Code\GrafoOperations\InvertGrafo.cs" />
+    <Compile Include="Code\GrafoOperations\KruskalAlgorithm.cs" />
     <Compile Include="Code\GrafoOperations\PrimAlgorithm.cs" />
     <Compile Include="Code\Models\IGrafo.cs" />
     <Compile Include="Code\Services\Undo\IUndoableAction.cs" />
@@ -100,6 +102,7 @@
     <Compile Include="Code\Services\Undo\UndoService.cs" />
     <Compile Include="Code\Utils\ColorUtils.cs" />
     <Compile Include="Code\Utils\Debug.cs" />
+    <Compile Include="Code\Utils\IReadOnlyListUtils.cs" />
     <Compile Include="Code\Utils\PointUtils.cs" />
     <Compile Include="Code\Factories\VerticeFactory.cs" />
     <Compile Include="Code\Utils\TextBlockUtils.cs" />

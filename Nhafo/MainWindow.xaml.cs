@@ -199,6 +199,8 @@ namespace Nhafo {
             grafoBipartir.IsEnabled = enabled;
             grafoComponenteConexa.IsEnabled = enabled;
             grafoPrim.IsEnabled = enabled;
+            grafoKruskal.IsEnabled = enabled;
+            grafoDijkstra.IsEnabled = enabled;
         }
 
         private void _Undo(object sender, ExecutedRoutedEventArgs e) => UndoService.Instance.Undo();
@@ -250,7 +252,32 @@ namespace Nhafo {
             GrafoControl currentGrafo = (grafosComboBox.SelectedItem as GrafoComboBoxItem).GrafoControl;
             VerticeControl vertice = await SelectVerticeDialog.Show(currentGrafo, "Algoritmo de Prim");
             if(vertice != null) {
-                GrafoControl result = await new PrimAlgorithm(currentGrafo).Generate(vertice);
+                GrafoControl result = new PrimAlgorithm(currentGrafo).Generate(vertice);
+                if(result != null) {
+                    result.Location = currentGrafo.Location.Sum(new Point(currentGrafo.ActualWidth * .5, currentGrafo.ActualHeight * .5));
+                    AddGrafo(result);
+                    result.BringToFront();
+                }
+            }
+        }
+
+        private void KruskalButtonClick(object sender, RoutedEventArgs e) {
+            GrafoControl currentGrafo = (grafosComboBox.SelectedItem as GrafoComboBoxItem).GrafoControl;
+            GrafoControl result = new KruskalAlgorithm(currentGrafo).Generate();
+            if(result != null) {
+                result.Location = currentGrafo.Location.Sum(new Point(currentGrafo.ActualWidth * .5, currentGrafo.ActualHeight * .5));
+                AddGrafo(result);
+                result.BringToFront();
+            }
+        }
+
+        private async void DijkstraButtonClick(object sender, RoutedEventArgs e) {
+            GrafoControl currentGrafo = (grafosComboBox.SelectedItem as GrafoComboBoxItem).GrafoControl;
+            VerticeControl source = await SelectVerticeDialog.Show(currentGrafo, "Dijkstra - De");
+            VerticeControl destiny = await SelectVerticeDialog.Show(currentGrafo, "Dijkstra - Para");
+
+            if(source != null && destiny != null) {
+                GrafoControl result = new DijkstraAlgorithm(currentGrafo).Generate(source, destiny);
                 if(result != null) {
                     result.Location = currentGrafo.Location.Sum(new Point(currentGrafo.ActualWidth * .5, currentGrafo.ActualHeight * .5));
                     AddGrafo(result);

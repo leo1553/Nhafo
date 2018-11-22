@@ -22,7 +22,7 @@ namespace Nhafo.Code.GrafoOperations {
             this.grafo = grafo;
         }
 
-        public async Task<GrafoControl> Generate(VerticeControl startAt, bool showDialog = true) {
+        public /*async Task<*/GrafoControl/*>*/ Generate(VerticeControl startAt, bool showDialog = true) {
             GrafoControl grafo = GrafoFactory.Clone(this.grafo);
             GrafoControl grafoControl = GrafoFactory.Create();
 

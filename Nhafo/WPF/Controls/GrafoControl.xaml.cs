@@ -97,6 +97,18 @@ namespace Nhafo.WPF.Controls {
             ClipToBounds = true;
 
             Loaded += (sender, args) => Location = _location;
+
+            ContextMenu contextMenu = new ContextMenu();
+            MenuItem menuItem = new MenuItem() {
+                Header = "Gerar pesos aleatórios"
+            };
+            menuItem.Click += (s, a) => {
+                Random random = new Random();
+                foreach(ArestaControl aresta in Arestas)
+                    aresta.Weight = random.Next(1, 100);
+            };
+            contextMenu.Items.Add(menuItem);
+            titleBorder.ContextMenu = contextMenu;
         }
 
         protected override void OnDragStart() {

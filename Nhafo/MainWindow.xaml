@@ -147,7 +147,29 @@
                         <TextBlock Text="Algoritmo de Prim" HorizontalAlignment="Right" Margin="5,0" />
                     </Grid>
                 </Button>
-                <Button x:Name="grafoDelete" Grid.Column="4" Grid.Row="0" Style="{StaticResource RedAccentedButton}" BorderThickness="0" Margin="2" HorizontalContentAlignment="Stretch" IsEnabled="False"
+                <Button x:Name="grafoKruskal" Grid.Column="4" Grid.Row="0" Style="{StaticResource CommonButton}" BorderThickness="1" Margin="2" HorizontalContentAlignment="Stretch" IsEnabled="False"
+                         Click="KruskalButtonClick">
+                    <Grid>
+                        <Rectangle Width="12" Height="12" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}}" Margin="5,0" HorizontalAlignment="Left">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Visual="{StaticResource appbar_share}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <TextBlock Text="Algoritmo de Kruskal" HorizontalAlignment="Right" Margin="5,0" />
+                    </Grid>
+                </Button>
+                <Button x:Name="grafoDijkstra" Grid.Column="4" Grid.Row="1" Style="{StaticResource CommonButton}" BorderThickness="1" Margin="2" HorizontalContentAlignment="Stretch" IsEnabled="False"
+                         Click="DijkstraButtonClick">
+                    <Grid>
+                        <Rectangle Width="12" Height="12" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}}" Margin="5,0" HorizontalAlignment="Left">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Visual="{StaticResource appbar_share}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <TextBlock Text="Algoritmo de Dijkstra" HorizontalAlignment="Right" Margin="5,0" />
+                    </Grid>
+                </Button>
+                <Button x:Name="grafoDelete" Grid.Column="4" Grid.Row="2" Style="{StaticResource RedAccentedButton}" BorderThickness="0" Margin="2" HorizontalContentAlignment="Stretch" IsEnabled="False"
                         Click="GrafoDeleteButtonClick">
                     <Grid>
                         <Rectangle Width="12" Height="12" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}}" Margin="5,0" HorizontalAlignment="Left">
