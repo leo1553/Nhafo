@@ -39,7 +39,7 @@ namespace Nhafo.Code.Factories {
                     Draggable = true,
 
                     Location = e.GetPosition(control.canvas),
-                    Key = FindChar(control),
+                    Key = FindChar(control).ToString(),
                 };
                 control.AddVertice(vertice);
                 UndoService.Instance.RegisterAction(new UndoAddVertice(vertice));
@@ -49,7 +49,8 @@ namespace Nhafo.Code.Factories {
         public static char FindChar<V, A>(IGrafo<V, A> grafo) where V : IVertice<V, A> where A : IAresta<V, A> {
             List<char> chars = new List<char>();
             foreach(V vertice in grafo.Vertices)
-                chars.Add(vertice.Key);
+                if(vertice.Key.Length == 1)
+                    chars.Add(vertice.Key[0]);
 
             char result;
             for(result = 'A'; result <= 'Z'; result++)

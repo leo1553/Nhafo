@@ -63,12 +63,12 @@ namespace Nhafo.WPF.Controls {
             }
         }
 
-        private char _key = '~';
-        public char Key {
+        private string _key = "~";
+        public string Key {
             get => _key;
             set {
                 _key = value;
-                Text = value.ToString();
+                Text = value;
             }
         }
 

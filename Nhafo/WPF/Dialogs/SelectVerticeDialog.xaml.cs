@@ -11,7 +11,7 @@ namespace Nhafo.WPF.Dialogs {
     /// Interação lógica para SelectVerticeDialog.xam
     /// </summary>
     public partial class SelectVerticeDialog : CustomDialog {
-        private static readonly VerticeControl InvalidVerticeControl = new VerticeControl() { Key = '\0' };
+        private static readonly VerticeControl InvalidVerticeControl = new VerticeControl() { Key = "\0" };
         private static readonly SelectVerticeDialog Instance = new SelectVerticeDialog();
 
         private ObservableCollection<VerticeComboBoxItem> ComboBoxItems { get; set; } = new ObservableCollection<VerticeComboBoxItem>();
@@ -69,7 +69,7 @@ namespace Nhafo.WPF.Dialogs {
             }
 
             public override string ToString() {
-                if(VerticeControl.Key == '\0')
+                if(VerticeControl.Key == "\0")
                     return "Selecione um Vértice";
                 return VerticeControl.Key.ToString();
             }
