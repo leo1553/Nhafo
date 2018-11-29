@@ -104,6 +104,7 @@ namespace Nhafo.WPF.Controls {
         Point offset;
         Point dragStartLocation;
         ContextMenu contextMenu;
+        MenuItem loopMenuItem;
         
         public VerticeControl() {
             InitializeComponent();
@@ -121,6 +122,22 @@ namespace Nhafo.WPF.Controls {
                     Key = newName;
             };
             contextMenu.Items.Add(menuItem);
+
+            // Loop
+            loopMenuItem = new MenuItem() { Header = "Laço", IsCheckable = true, IsChecked = false };
+            loopMenuItem.Click += (s, a) => {
+                if(loopMenuItem.IsChecked)
+                    Grafo.AddAresta(new ArestaControl() { VerticeA = this, VerticeB = this });
+                else {
+                    for(int i = 0; i < Grafo.Arestas.Count; i++) {
+                        if(Grafo.Arestas[i].IsLoop && Grafo.Arestas[i].VerticeA == this) {
+                            Grafo.RemoveAresta(Grafo.Arestas[i]);
+                            i--;
+                        }
+                    }
+                }
+            };
+            contextMenu.Items.Add(loopMenuItem);
 
             // Apagar
             menuItem = new MenuItem() { Header = "Apagar Vertice" };
@@ -170,10 +187,16 @@ namespace Nhafo.WPF.Controls {
 
         public void AddAresta(ArestaControl aresta) {
             _arestas.Add(aresta);
+
+            if(aresta.IsLoop)
+                loopMenuItem.IsChecked = true;
         }
 
         public void RemoveAresta(ArestaControl aresta) {
             _arestas.Remove(aresta);
+
+            if(aresta.IsLoop)
+                loopMenuItem.IsChecked = false;
         }
 
         public VerticeControl Clone() {

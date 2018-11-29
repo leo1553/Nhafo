@@ -234,9 +234,12 @@ namespace Nhafo.WPF.Controls {
 
         public void VerticeLocationUpdated(VerticeControl vertice) {
             if(IsLoop) {
-                PointA = new Point(VerticeA.Location.X + 10, VerticeA.Location.Y);
+                /* PointA = new Point(VerticeA.Location.X + 10, VerticeA.Location.Y);
                 PointB = new Point(VerticeA.Location.X, VerticeA.Location.Y + 10);
-                MiddlePoint = new Point(VerticeA.Location.X + 25, VerticeA.Location.Y + 25);
+                MiddlePoint = new Point(VerticeA.Location.X + 25, VerticeA.Location.Y + 25); */
+                PointA = new Point(VerticeA.Location.X - 12, VerticeA.Location.Y);
+                PointB = new Point(VerticeA.Location.X + 12, VerticeA.Location.Y);
+                MiddlePoint = new Point(VerticeA.Location.X, VerticeA.Location.Y - 50);
             }
             else if(vertice == VerticeA)
                 PointA = VerticeA.Location;
@@ -308,8 +311,12 @@ namespace Nhafo.WPF.Controls {
                     ellipse as FrameworkElement : 
                     textBlock as FrameworkElement;
             
-            SetPosition(elem, 
-                new Point(middle.X - (elem.ActualWidth / 2), middle.Y - (elem.ActualHeight / 2)));
+            if(IsLoop && elem is TextBlock)
+                SetPosition(elem, 
+                    new Point(VerticeA.Location.X - (elem.ActualWidth / 2), middle.Y - elem.ActualHeight - 2));
+            else
+                SetPosition(elem,
+                    new Point(middle.X - (elem.ActualWidth / 2), middle.Y - (elem.ActualHeight / 2)));
 
             UpdateArrow();
         }

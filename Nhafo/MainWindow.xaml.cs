@@ -38,7 +38,6 @@ namespace Nhafo {
         }
 
         private ObservableCollection<GrafoComboBoxItem> GrafoComboBoxItems { get; set; } = new ObservableCollection<GrafoComboBoxItem>();
-        private Grid openToolbarMenu = null;
 
         public bool IsToolbarMenuOpen {
             get => (bool)GetValue(IsToolbarMenuOpenProperty);
