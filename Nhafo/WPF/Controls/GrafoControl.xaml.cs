@@ -3,6 +3,7 @@ using Nhafo.Code.Factories;
 using Nhafo.Code.Models;
 using Nhafo.Code.Services.Undo;
 using Nhafo.Code.Utils;
+using Nhafo.WPF.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -99,15 +100,61 @@ namespace Nhafo.WPF.Controls {
             Loaded += (sender, args) => Location = _location;
 
             ContextMenu contextMenu = new ContextMenu();
-            MenuItem menuItem = new MenuItem() {
-                Header = "Gerar pesos aleatórios"
+            MenuItem menuItem;
+
+            MenuItem generateWeightMenu = new MenuItem() {
+                Header = "Gerar pesos",
             };
+
+            // 0 → 1
+            menuItem = new MenuItem() { Header = "Aleatório: 0.0 → 1.0" };
             menuItem.Click += (s, a) => {
                 Random random = new Random();
                 foreach(ArestaControl aresta in Arestas)
-                    aresta.Weight = random.Next(1, 100);
+                    aresta.Weight = random.NextDouble();
+            };
+            generateWeightMenu.Items.Add(menuItem);
+
+            // 0 → 10
+            menuItem = new MenuItem() { Header = "Aleatório: 0.0 → 10.0" };
+            menuItem.Click += (s, a) => {
+                Random random = new Random();
+                foreach(ArestaControl aresta in Arestas)
+                    aresta.Weight = random.NextDouble() * 10;
+            };
+            generateWeightMenu.Items.Add(menuItem);
+
+            // 0 → 100
+            menuItem = new MenuItem() { Header = "Aleatório: 0 → 100" };
+            menuItem.Click += (s, a) => {
+                Random random = new Random();
+                foreach(ArestaControl aresta in Arestas)
+                    aresta.Weight = random.Next(0, 100);
+            };
+            generateWeightMenu.Items.Add(menuItem);
+
+            // Distancia
+            menuItem = new MenuItem() { Header = "Distância" };
+            menuItem.Click += (s, a) => {
+                foreach(ArestaControl aresta in Arestas) {
+                    if(!aresta.IsLoop)
+                        aresta.Weight = aresta.VerticeA.Location.Distance(aresta.VerticeB.Location);
+                    else
+                        aresta.Weight = 1;
+                }
+            };
+            generateWeightMenu.Items.Add(menuItem);
+
+            // Renomear
+            menuItem = new MenuItem() { Header = "Renomear" };
+            menuItem.Click += async (s, a) => {
+                string newName = await GrafoDialogs.ShowRenameDialog(this);
+                if(newName != null)
+                    Key = newName;
             };
             contextMenu.Items.Add(menuItem);
+
+            contextMenu.Items.Add(generateWeightMenu);
             titleBorder.ContextMenu = contextMenu;
         }
 

@@ -153,7 +153,7 @@ namespace Nhafo.WPF.Controls {
                         Weight = dialog.Result;
                     }*/
                     float? result;
-                    if((result = await ArestaPesoDialog.Show()) != null) {
+                    if((result = await ArestaDialogs.ShowWeightDialog()) != null) {
                         UndoService.Instance.RegisterAction(new UndoChangeArestaWeight(this, Weight, result.Value));
                         Weight = result.Value;
                     }
@@ -165,10 +165,9 @@ namespace Nhafo.WPF.Controls {
             };
             contextMenu.Items.Add(addPesoMenuItem);
 
-            MenuItem menuItem = new MenuItem() {
-                Header = "Tipo de Aresta"
-            };
+            MenuItem menuItem = new MenuItem() { Header = "Tipo de Aresta" };
 
+            // Aresta Simples
             tipoSimplesMenuItem = new MenuItem() {
                 Header = "Simples",
                 IsCheckable = true,
@@ -176,6 +175,7 @@ namespace Nhafo.WPF.Controls {
             };
             tipoSimplesMenuItem.Click += (sender, args) => Direction = ArestaType.Common;
 
+            // Aresta Direcional
             tipoDirecionalMenuItem = new MenuItem() {
                 Header = "Direcional",
                 IsCheckable = true,
@@ -188,9 +188,8 @@ namespace Nhafo.WPF.Controls {
             contextMenu.Items.Add(menuItem);
             contextMenu.Items.Add(new Separator());
 
-            removerCurvaMenuItem = new MenuItem() {
-                Header = "Remover Curva"
-            };
+            // Remover Curva
+            removerCurvaMenuItem = new MenuItem() { Header = "Remover Curva" };
             removerCurvaMenuItem.Click += (sender, args) => {
                 UndoService.Instance.RegisterAction(new UndoMoveAresta(this, MiddlePoint, PointA));
                 MiddlePoint = PointA;
@@ -198,9 +197,8 @@ namespace Nhafo.WPF.Controls {
             };
             contextMenu.Items.Add(removerCurvaMenuItem);
 
-            menuItem = new MenuItem() {
-                Header = "Apagar Aresta"
-            };
+            // Apagar Aresta
+            menuItem = new MenuItem() { Header = "Apagar Aresta" };
             menuItem.Click += (sender, args) => {
                 UndoService.Instance.RegisterAction(new UndoRemoveAresta(this));
                 Grafo.RemoveAresta(this);
@@ -332,7 +330,10 @@ namespace Nhafo.WPF.Controls {
         }
 
         public override string ToString() {
-            return string.Format("{0} - {1}, W = {2}", VerticeA, VerticeB, Weight);
+            if(double.IsNaN(Weight))
+                return string.Format("{2} {0}, {1} {3}", VerticeA, VerticeB, '{', '}');
+            else
+                return string.Format("{2} {0}, {1} {3}, Peso = {4}", VerticeA, VerticeB, '{', '}', Weight);
         }
     }
 }

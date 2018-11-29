@@ -124,10 +124,12 @@
     <Compile Include="WPF\Dialogs\AnimatedGrafoDialog.xaml.cs">
       <DependentUpon>AnimatedGrafoDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WPF\Dialogs\ArestaPesoDialog.cs" />
+    <Compile Include="WPF\Dialogs\ArestaDialogs.cs" />
+    <Compile Include="WPF\Dialogs\GrafoDialogs.cs" />
     <Compile Include="WPF\Dialogs\SelectVerticeDialog.xaml.cs">
       <DependentUpon>SelectVerticeDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WPF\Dialogs\VerticeDialogs.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

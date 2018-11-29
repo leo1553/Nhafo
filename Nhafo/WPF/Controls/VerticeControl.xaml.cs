@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Collections.Generic;
 using Nhafo.Code.Services.Undo;
+using Nhafo.WPF.Dialogs;
 
 namespace Nhafo.WPF.Controls {
     /// <summary>
@@ -110,9 +111,19 @@ namespace Nhafo.WPF.Controls {
             SubscribeElement(this);
 
             contextMenu = new ContextMenu();
-            MenuItem menuItem = new MenuItem() {
-                Header = "Apagar Vertice"
+            MenuItem menuItem;
+
+            // Renomear
+            menuItem = new MenuItem() { Header = "Renomear" };
+            menuItem.Click += async (sender, args) => {
+                string newName = await VerticeDialogs.ShowRenameDialog(this);
+                if(newName != null)
+                    Key = newName;
             };
+            contextMenu.Items.Add(menuItem);
+
+            // Apagar
+            menuItem = new MenuItem() { Header = "Apagar Vertice" };
             menuItem.Click += (sender, args) => {
                 UndoService.Instance.RegisterAction(new UndoRemoveVertice(this));
                 Grafo.RemoveVertice(this);
