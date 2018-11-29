@@ -3,7 +3,7 @@ using Nhafo.Code.Utils;
 using Nhafo.WPF.Controls;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Windows.Media;
 
 namespace Nhafo.Code.GrafoOperations {
     public class DijkstraAlgorithm {
@@ -30,87 +30,101 @@ namespace Nhafo.Code.GrafoOperations {
             this.destiny = result.Vertices[grafo.Vertices.IndexOf(destiny)];
             vertices = new Dictionary<VerticeControl, DijkstraVertice>();
             foreach(VerticeControl vertice in result.Vertices)
-                vertices.Add(vertice, new DijkstraVertice(vertice, vertice == this.source));
+                vertices.Add(vertice, new DijkstraVertice(vertice));
 
-            Work(0);
+            vertices[this.source].Distance = 0;
+            vertices[this.source].Parent = this.source;
 
-            while(result.Arestas.Count != 0)
+            this.source.Color = Colors.Gold;
+            this.destiny.Color = Colors.Red;
+
+            foreach(ArestaControl a in this.source.Arestas) {
+                vertices[a.GetOposite(this.source)].Distance = a.Weight;
+                vertices[a.GetOposite(this.source)].Hook = this.source;
+            }
+
+            while(Work(result));
+
+            Dictionary<Tuple<VerticeControl, VerticeControl>, double> weights = new Dictionary<Tuple<VerticeControl, VerticeControl>, double>();
+
+            while(result.Arestas.Count != 0) {
+                weights.Add(
+                    new Tuple<VerticeControl, VerticeControl>(result.Arestas[0].VerticeA, result.Arestas[0].VerticeB),
+                    result.Arestas[0].Weight);
+
                 result.RemoveAresta(result.Arestas[0]);
-
+            }
+            
             VerticeControl current = this.destiny;
             DijkstraVertice currentData;
             while(true) {
                 currentData = vertices[current];
-                if(currentData.Previous == null)
+                if(currentData.Parent == current)
                     break;
 
                 result.AddAresta(new ArestaControl() {
                     VerticeA = current,
-                    VerticeB = currentData.Previous,
+                    VerticeB = currentData.Parent,
+                    Weight = FindArestaWeight(weights, current, currentData.Parent)
                 });
 
-                current = currentData.Previous;
+                current = currentData.Parent;
             }
             return result;
         }
 
-        private void Work(int index) {
-            if(index >= vertices.Count)
-                return;
+        private bool Work(GrafoControl grafo) {
+            double minDistance = double.PositiveInfinity;
+            VerticeControl nearest = null;
+            VerticeControl aux = null;
+            DijkstraVertice nearestData;
+            DijkstraVertice auxData;
 
-            DijkstraVertice data = vertices.ElementAt(index).Value;
-            VerticeControl vertice = data.Control;
-
-            data.Processed = true;
-
-            // Pegar vertice de menor distancia
-            VerticeControl vizinho;
-            DijkstraVertice vizinhoData;
-
-            VerticeControl menorDistancia;
-            double distancia = double.MaxValue;
-            foreach(ArestaControl aresta in vertice.Arestas) {
-                vizinho = aresta.GetOposite(vertice);
-                if(vertices[vizinho].Processed)
-                    continue;
-
-                if(aresta.Weight < distancia) {
-                    distancia = aresta.Weight;
-                    menorDistancia = aresta.GetOposite(vertice);
+            foreach(VerticeControl z in grafo.Vertices) {
+                nearestData = vertices[z];
+                if(nearestData.Parent == null && nearestData.Distance < minDistance) {
+                    minDistance = nearestData.Distance;
+                    nearest = z;
                 }
             }
+            if(double.IsPositiveInfinity(minDistance)) 
+                return false;
 
-            double alt;
-            foreach(ArestaControl aresta in vertice.Arestas) {
-                vizinho = aresta.GetOposite(vertice);
-                if(vertices[vizinho].Processed)
-                    continue;
-
-                vizinhoData = vertices[vizinho];
-
-                alt = distancia + aresta.Weight;
-                if(alt < vizinhoData.Distance) {
-                    vizinhoData.Distance = alt;
-                    vizinhoData.Previous = vertice;
+            nearestData = vertices[nearest];
+            nearestData.Parent = nearestData.Hook;
+            
+            foreach(ArestaControl a in nearest.Arestas) {
+                aux = a.GetOposite(nearest);
+                auxData = vertices[aux];
+                if(nearestData.Distance + a.Weight < auxData.Distance) {
+                    auxData.Distance = nearestData.Distance + a.Weight;
+                    auxData.Hook = nearest;
                 }
             }
+            return true;
+        }
 
-            Work(index + 1);
+        private double FindArestaWeight(Dictionary<Tuple<VerticeControl, VerticeControl>, double> weights,
+            VerticeControl verticeA, VerticeControl verticeB) {
+
+            foreach(Tuple<VerticeControl, VerticeControl> a in weights.Keys)
+                if((a.Item1 == verticeA && a.Item2 == verticeB)
+                || (a.Item2 == verticeA && a.Item1 == verticeB))
+                    return weights[a];
+            return double.NaN;
         }
 
         private class DijkstraVertice {
             public VerticeControl Control { get; private set; }
 
             public double Distance { get; set; } = double.PositiveInfinity;
-            public VerticeControl Previous { get; set; } = null;
-
+            public VerticeControl Parent { get; set; } = null;
+            public VerticeControl Hook { get; set; } = null;
+            
             public bool Processed { get; set; } = false;
 
-            public DijkstraVertice(VerticeControl vertice, bool isSource) {
+            public DijkstraVertice(VerticeControl vertice) {
                 Control = vertice;
-
-                if(isSource)
-                    Distance = 0;
             }
 
             public static implicit operator VerticeControl(DijkstraVertice vertice) {
