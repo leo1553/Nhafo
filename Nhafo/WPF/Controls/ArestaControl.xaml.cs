@@ -81,17 +81,12 @@ namespace Nhafo.WPF.Controls {
             get => _weight;
             set {
                 _weight = value;
-                if(double.IsNaN(value)) {
-                    textBlock.Visibility = Visibility.Hidden;
-                    ellipse.Visibility = Visibility.Visible;
+                if(double.IsNaN(_weight)) 
                     addPesoMenuItem.Header = "Adicionar Peso";
-                }
-                else {
-                    Text = _weight.ToString();
-                    textBlock.Visibility = Visibility.Visible;
-                    ellipse.Visibility = Visibility.Hidden;
+                else 
                     addPesoMenuItem.Header = "Remover Peso";
-                }
+
+                UpdateText();
                 UpdateBezierRelated();
             }
         }
@@ -112,6 +107,16 @@ namespace Nhafo.WPF.Controls {
                 if(_grafo != null && value != null)
                     throw new Exception();
                 _grafo = value;
+            }
+        }
+
+        private string _description = null;
+        public string Description {
+            get => _description;
+            set {
+                _description = value;
+                UpdateText();
+                UpdateBezierRelated();
             }
         }
 
@@ -165,8 +170,18 @@ namespace Nhafo.WPF.Controls {
             };
             contextMenu.Items.Add(addPesoMenuItem);
 
-            MenuItem menuItem = new MenuItem() { Header = "Tipo de Aresta" };
+            MenuItem menuItem;
 
+            // Descrição
+            menuItem = new MenuItem() { Header = "Descrição" };
+            menuItem.Click += async (s, a) => {
+                Tuple<bool, string> result = await ArestaDialogs.ShowDescriptionDialog(this);
+                if(result.Item1)
+                    Description = result.Item2;
+            };
+            contextMenu.Items.Add(menuItem);
+
+            menuItem = new MenuItem() { Header = "Tipo de Aresta" };
             // Aresta Simples
             tipoSimplesMenuItem = new MenuItem() {
                 Header = "Simples",
@@ -251,6 +266,26 @@ namespace Nhafo.WPF.Controls {
                 image.RenderTransform = new RotateTransform(GetArrowAngle(), image.Width / 2, image.Height / 2);
         }
 
+        private void UpdateText() {
+            if(_description == null && double.IsNaN(_weight)) {
+                textBlock.Visibility = Visibility.Hidden;
+                ellipse.Visibility = Visibility.Visible;
+            }
+            else {
+                if(_description == null && !double.IsNaN(_weight))
+                    Text = _weight.ToString();
+                else {
+                    if(!double.IsNaN(_weight))
+                        Text = string.Format("{1} ({0})", _description, _weight);
+                    else
+                        Text = _description;
+                }
+
+                textBlock.Visibility = Visibility.Visible;
+                ellipse.Visibility = Visibility.Hidden;
+            }
+        }
+
         private void UpdateBezierRelated() {
             Point middle;
             if(PointA == MiddlePoint)
@@ -269,7 +304,7 @@ namespace Nhafo.WPF.Controls {
             }
             
             FrameworkElement elem = 
-                double.IsNaN(Weight) ? 
+                double.IsNaN(Weight) && Description == null ? 
                     ellipse as FrameworkElement : 
                     textBlock as FrameworkElement;
             

@@ -5,6 +5,7 @@
         double Weight { get; }
         ArestaType Direction { get; }
         IGrafo<V, A> Grafo { get; }
+        string Description { get; }
         
         void VerticeLocationUpdated(V vertice);
         bool ContainsVertice(V vertice);

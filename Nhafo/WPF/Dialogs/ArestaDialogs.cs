@@ -1,6 +1,7 @@
 ﻿using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Nhafo.WPF.Controls;
+using System;
 using System.Globalization;
 using System.Threading.Tasks;
 
@@ -25,15 +26,16 @@ namespace Nhafo.WPF.Dialogs {
             return await ShowWeightDialog(true);
         }
 
-        public static async Task<string> ShowDescriptionDialog(ArestaControl aresta, bool error = false) {
+        public static async Task<Tuple<bool, string>> ShowDescriptionDialog(ArestaControl aresta) {
             MetroWindow mainWindow = App.Current.MainWindow as MetroWindow;
 
             MetroDialogSettings settings = new MetroDialogSettings() {
                 NegativeButtonText = "Cancelar"
             };
 
-            string result = await mainWindow.ShowInputAsync("Renomear", $"Insira a nova descrição para a aresta { aresta.ToString() }:", settings);
-            return result == null || result.Length == 0 ? null : result;
+            string str = await mainWindow.ShowInputAsync("Descrição", $"Insira a nova descrição para a aresta { aresta.ToString() }:", settings);
+            Tuple<bool, string> result = new Tuple<bool, string>(str != null, str.Length == 0 ? null : str);
+            return result;
         }
     }
 }
