@@ -40,9 +40,6 @@ namespace Nhafo {
         private ObservableCollection<GrafoComboBoxItem> GrafoComboBoxItems { get; set; } = new ObservableCollection<GrafoComboBoxItem>();
         private Grid openToolbarMenu = null;
 
-        private Storyboard toolbarShowStoryboard = new Storyboard();
-        private Storyboard toolbarHideStoryboard = new Storyboard();
-
         public bool IsToolbarMenuOpen {
             get => (bool)GetValue(IsToolbarMenuOpenProperty);
             set => SetValue(IsToolbarMenuOpenProperty, value);
@@ -63,15 +60,6 @@ namespace Nhafo {
             grafosComboBox.SelectedIndex = 0;
             grafosComboBox.SelectionChanged += _GrafosComboBoxSelectionChanged;
             GrafoComboBoxItems.Add(new GrafoComboBoxItem(InvalidGrafoControl));
-
-            CreateAnimations();
-
-            foreach (UIElement elem in toolbar.Children) {
-                if (elem is Grid grid) {
-                    grid.Margin = new Thickness(0, -250, 0, 0);
-                    grid.Visibility = Visibility.Hidden;
-                }
-            }
 
             //ColorItem defaultColor = new ColorItem(verticeColorPicker.SelectedColor, "Default");
             //verticeColorPicker.StandardColors[0] = defaultColor;
@@ -103,31 +91,6 @@ namespace Nhafo {
             else if (parent is T)
                 return parent as T;
             return FindParent<T>(parent);
-        }
-
-        private void CreateAnimations() {
-            ObjectAnimationUsingKeyFrames objAnimation;
-            ThicknessAnimation thicknessAnimation;
-
-            // toolbarShowStoryboard
-            objAnimation = new ObjectAnimationUsingKeyFrames();
-            objAnimation.KeyFrames.Add(new DiscreteObjectKeyFrame(Visibility.Visible) { KeyTime = TimeSpan.Zero });
-            toolbarShowStoryboard.Children.Add(objAnimation);
-            Storyboard.SetTargetProperty(objAnimation, new PropertyPath("Visibility"));
-
-            thicknessAnimation = new ThicknessAnimation(new Thickness(0), new Duration(new TimeSpan(0, 0, 0, 0, 300)));
-            toolbarShowStoryboard.Children.Add(thicknessAnimation);
-            Storyboard.SetTargetProperty(thicknessAnimation, new PropertyPath("Margin"));
-
-            // toolbarHideStoryboard
-            thicknessAnimation = new ThicknessAnimation(new Thickness(0, -250, 0, 0), new Duration(new TimeSpan(0, 0, 0, 0, 300)));
-            toolbarHideStoryboard.Children.Add(thicknessAnimation);
-            Storyboard.SetTargetProperty(thicknessAnimation, new PropertyPath("Margin"));
-
-            objAnimation = new ObjectAnimationUsingKeyFrames();
-            objAnimation.KeyFrames.Add(new DiscreteObjectKeyFrame(Visibility.Hidden) { KeyTime = new TimeSpan(0, 0, 0, 0, 300) });
-            toolbarHideStoryboard.Children.Add(objAnimation);
-            Storyboard.SetTargetProperty(objAnimation, new PropertyPath("Visibility"));
         }
 
         public void AddGrafo(GrafoControl control) {
@@ -162,33 +125,6 @@ namespace Nhafo {
                 if (toRemove != null)
                     GrafoComboBoxItems.Remove(toRemove);
             }
-        }
-
-        private void _GrafoButtonClick(object sender, RoutedEventArgs e) => OpenToolbarMenu(grafoToolbarMenu);
-        //private void _VerticeButtonClick(object sender, RoutedEventArgs e) => OpenToolbarMenu(verticeToolbarMenu);
-        private void _ToolbarCloseButtonClick(object sender, RoutedEventArgs e) => CloseToolbarMenu();
-
-        private void OpenToolbarMenu(Grid toolbarMenu) {
-            if (openToolbarMenu == toolbarMenu) {
-                CloseToolbarMenu();
-                return;
-            }
-
-            if (openToolbarMenu != null)
-                openToolbarMenu.BeginStoryboard(toolbarHideStoryboard);
-
-            openToolbarMenu = toolbarMenu;
-            openToolbarMenu.BeginStoryboard(toolbarShowStoryboard);
-            IsToolbarMenuOpen = true;
-        }
-
-        private void CloseToolbarMenu() {
-            if (openToolbarMenu != null) {
-                openToolbarMenu.BeginStoryboard(toolbarHideStoryboard);
-                openToolbarMenu = null;
-            }
-
-            IsToolbarMenuOpen = false;
         }
 
         private void _GrafosComboBoxSelectionChanged(object sender, SelectionChangedEventArgs e) {
