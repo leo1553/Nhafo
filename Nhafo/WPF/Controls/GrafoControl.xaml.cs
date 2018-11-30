@@ -155,6 +155,14 @@ namespace Nhafo.WPF.Controls {
             contextMenu.Items.Add(menuItem);
 
             contextMenu.Items.Add(generateWeightMenu);
+
+            // Apagar
+            menuItem = new MenuItem() { Header = "Apagar Grafo" };
+            menuItem.Click += (s, a) => {
+                MainWindow.Instance.RemoveGrafo(this);
+            };
+            contextMenu.Items.Add(menuItem);
+
             titleBorder.ContextMenu = contextMenu;
         }
 

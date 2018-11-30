@@ -262,6 +262,8 @@ namespace Nhafo.WPF.Controls {
                 image.Visibility = Visibility.Visible;
                 UpdateArrow();
             }
+            textBlock.InvalidateMeasure();
+            UpdateBezierRelated();
         }
 
         private void UpdateArrow() {
@@ -276,10 +278,10 @@ namespace Nhafo.WPF.Controls {
             }
             else {
                 if(_description == null && !double.IsNaN(_weight))
-                    Text = _weight.ToString();
+                    Text = _weight.ToString("0.##");
                 else {
                     if(!double.IsNaN(_weight))
-                        Text = string.Format("{1} ({0})", _description, _weight);
+                        Text = string.Format("{1:0.##} ({0})", _description, _weight);
                     else
                         Text = _description;
                 }
@@ -287,6 +289,8 @@ namespace Nhafo.WPF.Controls {
                 textBlock.Visibility = Visibility.Visible;
                 ellipse.Visibility = Visibility.Hidden;
             }
+            
+            UpdateBezierRelated();
         }
 
         private void UpdateBezierRelated() {
